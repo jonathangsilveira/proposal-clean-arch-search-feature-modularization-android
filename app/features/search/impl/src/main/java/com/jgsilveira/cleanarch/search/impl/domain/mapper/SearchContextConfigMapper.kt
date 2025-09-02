@@ -5,7 +5,7 @@ import com.jgsilveira.cleanarch.search.impl.domain.model.config.BenefitsSearchCo
 import com.jgsilveira.cleanarch.search.impl.domain.model.config.DefaultSearchContextConfig
 import com.jgsilveira.cleanarch.search.impl.domain.model.config.HomeSearchContextConfig
 import com.jgsilveira.cleanarch.search.model.SearchContext
-import com.jgsilveira.cleanarch.search.model.SearchContextConfig
+import com.jgsilveira.cleanarch.search.impl.domain.model.config.SearchContextConfig
 
 internal interface SearchContextConfigMapper {
     fun fromOrigin(origin: SearchOrigin): SearchContextConfig

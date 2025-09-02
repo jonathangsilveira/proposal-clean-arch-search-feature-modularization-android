@@ -5,6 +5,7 @@ import android.content.Intent
 import com.jgsilveira.cleanarch.search.android.navigation.SearchNavigation
 import com.jgsilveira.cleanarch.search.android.navigation.SearchOrigin
 import com.jgsilveira.cleanarch.search.impl.domain.mapper.SearchContextConfigMapper
+import com.jgsilveira.cleanarch.search.impl.domain.model.config.DefaultSearchContextConfig
 import com.jgsilveira.cleanarch.search.impl.view.SearchActivity
 
 internal class SearchNavigator(
@@ -23,7 +24,7 @@ internal class SearchNavigator(
         context: Context,
         searchOrigin: SearchOrigin
     ): Intent {
-        val contextConfig = contextConfigMapper.fromOrigin(searchOrigin)
+        val contextConfig = contextConfigMapper.fromOrigin(searchOrigin) as DefaultSearchContextConfig
         return SearchActivity.newIntent(context, contextConfig)
     }
 }

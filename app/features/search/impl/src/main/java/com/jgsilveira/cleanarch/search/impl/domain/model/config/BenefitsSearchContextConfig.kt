@@ -1,7 +1,5 @@
 package com.jgsilveira.cleanarch.search.impl.domain.model.config
 
-import com.jgsilveira.cleanarch.search.model.OriginBusinessContext
-import com.jgsilveira.cleanarch.search.model.SearchContextConfig
 import com.jgsilveira.cleanarch.search.model.SearchGroup
 import com.jgsilveira.cleanarch.search.model.SerializationVersion
 

@@ -5,7 +5,7 @@ import com.jgsilveira.cleanarch.search.impl.domain.model.params.SearchParams
 import com.jgsilveira.cleanarch.search.impl.domain.provider.DeviceLocationProvider
 import com.jgsilveira.cleanarch.search.impl.domain.provider.TrackerSessionIdProvider
 import com.jgsilveira.cleanarch.search.impl.domain.search.SearchParamsFactory
-import com.jgsilveira.cleanarch.search.model.SearchContextConfig
+import com.jgsilveira.cleanarch.search.impl.domain.model.config.SearchContextConfig
 
 internal class SearchParamsFactoryImpl(
     private val contextConfig: SearchContextConfig,
