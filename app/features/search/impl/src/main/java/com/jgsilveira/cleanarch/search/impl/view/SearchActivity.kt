@@ -6,7 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.jgsilveira.cleanarch.search.impl.domain.model.config.DefaultSearchContextConfig
+import com.jgsilveira.cleanarch.search.impl.domain.model.config.SearchContextConfigModel
 import com.jgsilveira.cleanarch.search.impl.domain.model.config.SearchContextConfig
 internal class SearchActivity : AppCompatActivity() {
     private val contextConfig: SearchContextConfig by lazy { getArgs()!! }
@@ -19,9 +19,9 @@ internal class SearchActivity : AppCompatActivity() {
     private fun getArgs(): SearchContextConfig? {
         val bundle = intent.extras ?: Bundle()
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            bundle.getParcelable("args", DefaultSearchContextConfig::class.java)
+            bundle.getParcelable("args", SearchContextConfigModel::class.java)
         } else {
-            bundle.getParcelable<DefaultSearchContextConfig>("args")
+            bundle.getParcelable<SearchContextConfigModel>("args")
         }
     }
 
@@ -29,7 +29,7 @@ internal class SearchActivity : AppCompatActivity() {
 
         fun newIntent(
             context: Context,
-            contextConfig: DefaultSearchContextConfig
+            contextConfig: SearchContextConfigModel
         ) = Intent(context, SearchActivity::class.java)
             .putExtra("args", contextConfig)
     }

@@ -6,7 +6,7 @@ import com.jgsilveira.cleanarch.search.model.SerializationVersion
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-internal data class DefaultSearchContextConfig(
+internal data class SearchContextConfigModel(
     override val originBusinessContext: OriginBusinessContext,
     override val serializationVersion: SerializationVersion = SerializationVersion.V3,
     override val group: SearchGroup = SearchGroup.GENERAL,

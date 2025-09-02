@@ -1,15 +1,12 @@
 package com.jgsilveira.cleanarch.search.impl.domain.mapper
 
 import com.jgsilveira.cleanarch.search.android.navigation.SearchOrigin
-import com.jgsilveira.cleanarch.search.impl.domain.model.config.BenefitsSearchContextConfig
-import com.jgsilveira.cleanarch.search.impl.domain.model.config.DefaultSearchContextConfig
-import com.jgsilveira.cleanarch.search.impl.domain.model.config.HomeSearchContextConfig
+import com.jgsilveira.cleanarch.search.impl.domain.model.config.SearchContextConfigModel
 import com.jgsilveira.cleanarch.search.model.SearchContext
-import com.jgsilveira.cleanarch.search.impl.domain.model.config.SearchContextConfig
 
 internal interface SearchContextConfigMapper {
-    fun fromOrigin(origin: SearchOrigin): SearchContextConfig
-    fun fromContext(context: SearchContext): SearchContextConfig
+    fun fromOrigin(origin: SearchOrigin): SearchContextConfigModel
+    fun fromContext(context: SearchContext): SearchContextConfigModel
 }
 
 internal object SearchContextConfigMapperImpl : SearchContextConfigMapper {
@@ -19,20 +16,21 @@ internal object SearchContextConfigMapperImpl : SearchContextConfigMapper {
     )
 
     private val contextConfigMap = mapOf(
-        SearchContext.HOME to HomeSearchContextConfig(),
-        SearchContext.BENEFITS to BenefitsSearchContextConfig()
+        SearchContext.HOME to HomeSearchContextConfigFactory,
+        SearchContext.BENEFITS to BenefitsSearchContextConfigFactory
     )
 
-    override fun fromOrigin(origin: SearchOrigin): SearchContextConfig {
+    override fun fromOrigin(origin: SearchOrigin): SearchContextConfigModel {
         val context = originContextMap[origin]
             ?: error("Invalid search origin: $origin")
         return fromContext(context)
     }
 
-    override fun fromContext(context: SearchContext): SearchContextConfig {
-        val contextConfig = contextConfigMap[context]
+    override fun fromContext(context: SearchContext): SearchContextConfigModel {
+        val contextConfigFactory = contextConfigMap[context]
             ?: error("Search context config not found: $context")
-        return contextConfig.takeIf { it.isEnabled } ?: DefaultSearchContextConfig(
+        val contextConfig = contextConfigFactory.createContextConfig()
+        return contextConfig.takeIf { it.isEnabled } ?: SearchContextConfigModel(
             originBusinessContext = contextConfig.originBusinessContext
         )
     }
