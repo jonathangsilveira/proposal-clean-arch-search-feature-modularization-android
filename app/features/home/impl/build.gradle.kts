@@ -37,6 +37,8 @@ android {
 }
 
 dependencies {
+    implementation(project(":app:features:search:public"))
+    implementation(project(":app:features:search:public-android"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
