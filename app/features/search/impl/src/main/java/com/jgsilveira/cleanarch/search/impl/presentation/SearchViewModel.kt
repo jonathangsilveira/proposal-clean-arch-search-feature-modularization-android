@@ -5,4 +5,8 @@ import androidx.lifecycle.ViewModel
 internal class SearchViewModel(
     private val useCaseProvider: SearchUseCaseProvider
 ): ViewModel() {
+
+    init {
+        println("Search ViewModel")
+    }
 }

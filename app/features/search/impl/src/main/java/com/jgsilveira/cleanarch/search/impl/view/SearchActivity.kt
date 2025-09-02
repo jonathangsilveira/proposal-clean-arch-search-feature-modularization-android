@@ -8,8 +8,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.jgsilveira.cleanarch.search.impl.domain.model.config.SearchContextConfigModel
 import com.jgsilveira.cleanarch.search.impl.domain.model.config.SearchContextConfig
+import com.jgsilveira.cleanarch.search.impl.presentation.SearchViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
+
 internal class SearchActivity : AppCompatActivity() {
     private val contextConfig: SearchContextConfig by lazy { getArgs()!! }
+    private val viewModel by viewModel<SearchViewModel> { parametersOf(contextConfig) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
