@@ -1,5 +1,5 @@
 package com.jgsilveira.cleanarch.search.model
 
 enum class SearchContext {
-    HOME, BENEFITS
+    FEATURE_A, FEATURE_B
 }

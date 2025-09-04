@@ -11,13 +11,13 @@ internal interface SearchContextConfigMapper {
 
 internal object SearchContextConfigMapperImpl : SearchContextConfigMapper {
     private val originContextMap = mapOf(
-        SearchOrigin.HOME to SearchContext.HOME,
-        SearchOrigin.BENEFITS to SearchContext.BENEFITS
+        SearchOrigin.FEATURE_A to SearchContext.FEATURE_A,
+        SearchOrigin.FEATURE_B to SearchContext.FEATURE_B
     )
 
     private val contextConfigMap = mapOf(
-        SearchContext.HOME to HomeSearchContextConfigFactory,
-        SearchContext.BENEFITS to BenefitsSearchContextConfigFactory
+        SearchContext.FEATURE_A to FeatureASearchContextConfigFactory,
+        SearchContext.FEATURE_B to FeatureBSearchContextConfigFactory
     )
 
     override fun fromOrigin(origin: SearchOrigin): SearchContextConfigModel {

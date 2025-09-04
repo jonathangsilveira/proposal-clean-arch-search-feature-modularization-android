@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.jgsilveira.cleanarch.search.impl.domain.model.config.SearchContextConfigModel
@@ -12,7 +13,7 @@ import com.jgsilveira.cleanarch.search.impl.presentation.SearchViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-internal class SearchActivity : AppCompatActivity() {
+internal class SearchActivity : ComponentActivity() {
     private val contextConfig: SearchContextConfig by lazy { getArgs()!! }
     private val viewModel by viewModel<SearchViewModel> { parametersOf(contextConfig) }
 

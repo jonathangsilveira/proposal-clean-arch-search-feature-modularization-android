@@ -3,9 +3,10 @@
 
     <application>
         <activity
-            android:name=".view.SearchActivity"
+            android:name=".FeatureAActivity"
             android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:label="@string/title_activity_feature_aactivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>

@@ -1,5 +1,5 @@
 package com.jgsilveira.cleanarch.search.android.navigation
 
 enum class SearchOrigin {
-    HOME, BENEFITS, NOT_MAPPED
+    FEATURE_A, FEATURE_B, NOT_MAPPED
 }
