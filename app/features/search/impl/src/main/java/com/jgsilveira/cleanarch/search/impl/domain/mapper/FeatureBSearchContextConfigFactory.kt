@@ -2,8 +2,8 @@ package com.jgsilveira.cleanarch.search.impl.domain.mapper
 
 import com.jgsilveira.cleanarch.search.impl.domain.model.config.OriginBusinessContext
 import com.jgsilveira.cleanarch.search.impl.domain.model.config.SearchContextConfigModel
-import com.jgsilveira.cleanarch.search.model.SearchGroup
-import com.jgsilveira.cleanarch.search.model.SerializationVersion
+import com.jgsilveira.cleanarch.search.impl.domain.model.config.SearchGroup
+import com.jgsilveira.cleanarch.search.impl.domain.model.config.SerializationVersion
 
 internal object FeatureBSearchContextConfigFactory: SearchContextConfigFactory {
     override fun createContextConfig(): SearchContextConfigModel {

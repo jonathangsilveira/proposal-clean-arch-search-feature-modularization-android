@@ -1,8 +1,6 @@
 package com.jgsilveira.cleanarch.search.impl.domain.model.config
 
 import android.os.Parcelable
-import com.jgsilveira.cleanarch.search.model.SearchGroup
-import com.jgsilveira.cleanarch.search.model.SerializationVersion
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
