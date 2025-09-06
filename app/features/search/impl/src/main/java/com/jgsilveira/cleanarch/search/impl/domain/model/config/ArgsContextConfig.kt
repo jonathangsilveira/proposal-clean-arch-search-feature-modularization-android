@@ -13,25 +13,32 @@ internal data class ArgsContextConfig(
     override val originConfig: OriginConfig
 ): Parcelable, SearchContextConfig {
 
-    constructor(contextConfig: SearchContextConfig) : this(
-        serializationVersion = contextConfig.serializationVersion,
-        group = contextConfig.group,
-        queryLimit = contextConfig.queryLimit,
-        usesDeviceLocation = contextConfig.usesDeviceLocation,
-        isEnabled = contextConfig.isEnabled,
-        originConfig = with(contextConfig.originConfig) {
-            OriginConfig(
-                uuid = uuid,
-                name = name,
-                screen = screen
-            )
-        }
-    )
-
     @Parcelize
     data class OriginConfig(
         override val uuid: String,
         override val name: String,
         override val screen: String
     ): Parcelable, SearchOriginConfig
+
+    companion object {
+
+        fun fromContextConfig(contextConfig: SearchContextConfig): ArgsContextConfig {
+            return with(contextConfig) {
+                ArgsContextConfig(
+                    serializationVersion = serializationVersion,
+                    group = group,
+                    queryLimit = queryLimit,
+                    usesDeviceLocation = usesDeviceLocation,
+                    isEnabled = isEnabled,
+                    originConfig = with(originConfig) {
+                        OriginConfig(
+                            uuid = uuid,
+                            name = name,
+                            screen = screen
+                        )
+                    }
+                )
+            }
+        }
+    }
 }

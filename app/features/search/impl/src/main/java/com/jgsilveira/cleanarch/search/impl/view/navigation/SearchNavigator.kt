@@ -25,7 +25,7 @@ internal class SearchNavigator(
         searchOrigin: SearchOrigin
     ): Intent {
         val contextConfig = contextConfigFactory.fromOrigin(searchOrigin)
-        val args = ArgsContextConfig(contextConfig)
+        val args = ArgsContextConfig.fromContextConfig(contextConfig)
         return SearchActivity.newIntent(context, args)
     }
 }
