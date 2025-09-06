@@ -1,1 +1,9 @@
-<resources></resources>
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_search">Search</string>
+    <string name="back">Back</string>
+    <string name="error_generic_title">Something went wrong!</string>
+    <string name="error_generic_message">An error occurred during the search!\nTry to refine your query</string>
+    <string name="empty_state_message">"Type your query to get results</string>
+    <string name="section_items_count">"Section with %d items</string>
+</resources>
