@@ -6,7 +6,7 @@ import com.jgsilveira.cleanarch.search.impl.data.provider.InMemoryTrackerSession
 import com.jgsilveira.cleanarch.search.impl.data.repository.InMemorySearchRepository
 import com.jgsilveira.cleanarch.search.impl.data.repository.InMemoryUserPermissionRepository
 import com.jgsilveira.cleanarch.search.impl.data.search.SearchParamsFactoryImpl
-import com.jgsilveira.cleanarch.search.impl.domain.mapper.SearchContextConfigMapperImpl
+import com.jgsilveira.cleanarch.search.impl.domain.mapper.SearchContextConfigFactoryImpl
 import com.jgsilveira.cleanarch.search.impl.domain.search.Searcher
 import com.jgsilveira.cleanarch.search.impl.presentation.SearchUseCaseProvider
 import com.jgsilveira.cleanarch.search.impl.presentation.SearchViewModel
@@ -26,7 +26,7 @@ val searchKoinModule = module {
 
     factory<SearchNavigation> {
         SearchNavigator(
-            contextConfigMapper = SearchContextConfigMapperImpl
+            contextConfigFactory = SearchContextConfigFactoryImpl
         )
     }
 
@@ -43,12 +43,13 @@ val searchKoinModule = module {
 
     factory<SearcherFactory> {
         KoinSearcherFactory(
-            contextConfigMapper = SearchContextConfigMapperImpl
+            contextConfigFactory = SearchContextConfigFactoryImpl
         )
     }
 
     viewModel<SearchViewModel> { (contextConfig: SearchContextConfig) ->
         SearchViewModel(
+            contextConfig = contextConfig,
             useCaseProvider = SearchUseCaseProvider(
                 search = SearchUseCase(
                     searcher = get { parametersOf(contextConfig) }
