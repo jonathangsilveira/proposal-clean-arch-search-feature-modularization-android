@@ -4,11 +4,12 @@ import android.content.Context
 import android.content.Intent
 import com.jgsilveira.cleanarch.search.android.navigation.SearchNavigation
 import com.jgsilveira.cleanarch.search.android.navigation.SearchOrigin
-import com.jgsilveira.cleanarch.search.impl.domain.mapper.SearchContextConfigMapper
+import com.jgsilveira.cleanarch.search.impl.domain.mapper.SearchContextConfigFactory
+import com.jgsilveira.cleanarch.search.impl.domain.model.config.ArgsContextConfig
 import com.jgsilveira.cleanarch.search.impl.view.SearchActivity
 
 internal class SearchNavigator(
-    private val contextConfigMapper: SearchContextConfigMapper
+    private val contextConfigFactory: SearchContextConfigFactory
 ): SearchNavigation {
 
     override fun navigate(
@@ -23,7 +24,8 @@ internal class SearchNavigator(
         context: Context,
         searchOrigin: SearchOrigin
     ): Intent {
-        val contextConfig = contextConfigMapper.fromOrigin(searchOrigin)
-        return SearchActivity.newIntent(context, contextConfig)
+        val contextConfig = contextConfigFactory.fromOrigin(searchOrigin)
+        val args = ArgsContextConfig(contextConfig)
+        return SearchActivity.newIntent(context, args)
     }
 }
