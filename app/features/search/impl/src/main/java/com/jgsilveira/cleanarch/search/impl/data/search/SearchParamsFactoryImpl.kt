@@ -17,12 +17,14 @@ internal class SearchParamsFactoryImpl(
         return with(contextConfig) {
             SearchParams(
                 serializationVersion = serializationVersion.name,
-                analyticHeaders = AnalyticHeaders(
-                    sessionId = trackerSessionIdProvider.getTrackerSessionId(),
-                    id = originBusinessContext.uuid,
-                    context = originBusinessContext.contextName,
-                    screen = originBusinessContext.previousScreen
-                ),
+                analyticHeaders = with(contextConfig.originConfig) {
+                    AnalyticHeaders(
+                        sessionId = trackerSessionIdProvider.getTrackerSessionId(),
+                        id = uuid,
+                        context = name,
+                        screen = screen
+                    )
+                },
                 group = group.name,
                 queryLimit = queryLimit,
                 query = query,
