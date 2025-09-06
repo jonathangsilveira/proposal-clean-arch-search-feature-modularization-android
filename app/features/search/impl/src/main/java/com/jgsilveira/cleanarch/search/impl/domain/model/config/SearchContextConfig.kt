@@ -6,5 +6,11 @@ internal interface SearchContextConfig {
     val queryLimit: Int
     val isEnabled: Boolean
     val usesDeviceLocation: Boolean
-    val originBusinessContext: OriginBusinessContext
+    val originConfig: SearchOriginConfig
+}
+
+internal interface SearchOriginConfig {
+    val uuid: String
+    val name: String
+    val screen: String
 }

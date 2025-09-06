@@ -1,14 +1,10 @@
 package com.jgsilveira.cleanarch.search.impl.domain.model.config
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
-
-@Parcelize
-internal data class SearchContextConfigModel(
-    override val originBusinessContext: OriginBusinessContext,
+internal data class DefaultContextConfig(
+    override val originConfig: SearchOriginConfig,
     override val serializationVersion: SerializationVersion = SerializationVersion.V3,
     override val group: SearchGroup = SearchGroup.GENERAL,
     override val queryLimit: Int = 3,
     override val isEnabled: Boolean = true,
     override val usesDeviceLocation: Boolean = true
-): SearchContextConfig, Parcelable
+) : SearchContextConfig
