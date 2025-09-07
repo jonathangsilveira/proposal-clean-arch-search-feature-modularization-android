@@ -7,6 +7,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.addCallback
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Arrangement
@@ -16,11 +17,17 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -67,7 +74,9 @@ internal class SearchActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier,
                     topBar = {
-                        SearchTopBar()
+                        SearchTopBar {
+                            onBackPressedDispatcher.onBackPressed()
+                        }
                     }
                 ) { innerPadding ->
                     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -82,6 +91,13 @@ internal class SearchActivity : ComponentActivity() {
                     )
                 }
             }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        onBackPressedDispatcher.addCallback(this) {
+            finish()
         }
     }
 
@@ -105,8 +121,20 @@ internal class SearchActivity : ComponentActivity() {
 }
 
 @Composable
-private fun SearchTopBar() {
+private fun SearchTopBar(onNavClick: () -> Unit = {}) {
     TopAppBar(
+        navigationIcon = {
+            IconButton(
+                onClick = onNavClick,
+                modifier = Modifier.padding(8.dp).wrapContentSize()
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
+                    contentDescription = stringResource(R.string.back),
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+        },
         title = {
             Text(text = stringResource(R.string.title_search))
         }
@@ -138,7 +166,13 @@ private fun SearchScreen(
             SearchUIState.Empty ->
                 EmptyContent(modifier = contentModifier)
 
-            is SearchUIState.Error,
+            is SearchUIState.Error -> {
+                val section = (uiState as? SearchUIState.Error)?.sections ?: emptyList()
+                ResultsContent(
+                    sections = section,
+                    modifier = contentModifier
+                )
+            }
             is SearchUIState.Results -> {
                 val section = (uiState as? SearchUIState.Results)?.sections ?: emptyList()
                 ResultsContent(
