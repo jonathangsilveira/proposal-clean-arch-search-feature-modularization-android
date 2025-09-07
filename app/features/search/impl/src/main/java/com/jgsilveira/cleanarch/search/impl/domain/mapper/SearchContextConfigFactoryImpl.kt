@@ -1,6 +1,8 @@
 package com.jgsilveira.cleanarch.search.impl.domain.mapper
 
 import com.jgsilveira.cleanarch.search.android.navigation.SearchOrigin
+import com.jgsilveira.cleanarch.search.impl.domain.exception.SearchContextConfigNotFoundException
+import com.jgsilveira.cleanarch.search.impl.domain.exception.SearchContextNotFoundException
 import com.jgsilveira.cleanarch.search.impl.domain.model.config.DefaultContextConfig
 import com.jgsilveira.cleanarch.search.impl.domain.model.config.FeatureAContextConfig
 import com.jgsilveira.cleanarch.search.impl.domain.model.config.FeatureBContextConfig
@@ -20,13 +22,13 @@ internal object SearchContextConfigFactoryImpl : SearchContextConfigFactory {
 
     override fun fromOrigin(origin: SearchOrigin): SearchContextConfig {
         val context = originContextMap[origin]
-            ?: error("Invalid search origin: $origin")
+            ?: throw SearchContextNotFoundException(origin)
         return fromContext(context)
     }
 
     override fun fromContext(context: SearchContext): SearchContextConfig {
         val contextConfig = contextConfigMap[context]
-            ?: error("Search context config not found: $context")
+            ?: throw SearchContextConfigNotFoundException(context)
         if (contextConfig.isEnabled.not()) {
             return DefaultContextConfig(contextConfig.originConfig)
         }
