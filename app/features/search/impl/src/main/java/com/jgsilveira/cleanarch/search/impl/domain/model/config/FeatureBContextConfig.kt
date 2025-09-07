@@ -5,7 +5,7 @@ import java.util.UUID
 internal class FeatureBContextConfig: SearchContextConfig {
     override val serializationVersion: SerializationVersion = SerializationVersion.V2
     override val group: SearchGroup = SearchGroup.PEOPLE
-    override val queryLimit: Int = 2
+    override val queryLimit: Int = 3
     override val isEnabled: Boolean = true
     override val usesDeviceLocation: Boolean = true
     override val originConfig: SearchOriginConfig = OriginConfig(
