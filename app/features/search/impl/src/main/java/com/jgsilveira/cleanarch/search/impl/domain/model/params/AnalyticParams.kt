@@ -1,6 +1,6 @@
 package com.jgsilveira.cleanarch.search.impl.domain.model.params
 
-internal data class AnalyticHeaders(
+internal data class AnalyticParams(
     val sessionId: String,
     val id: String,
     val context: String,
