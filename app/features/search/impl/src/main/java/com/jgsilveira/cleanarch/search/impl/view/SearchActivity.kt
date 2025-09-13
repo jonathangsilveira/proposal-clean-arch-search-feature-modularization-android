@@ -34,6 +34,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -46,10 +47,14 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.traversalIndex
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import com.jgsilveira.cleanarch.search.impl.R
 import com.jgsilveira.cleanarch.search.impl.domain.model.config.ArgsContextConfig
 import com.jgsilveira.cleanarch.search.impl.domain.model.config.SearchContextConfig
+import com.jgsilveira.cleanarch.search.impl.presentation.SearchUIEffect
 import com.jgsilveira.cleanarch.search.impl.presentation.SearchUIEvent
 import com.jgsilveira.cleanarch.search.impl.presentation.SearchUIState
 import com.jgsilveira.cleanarch.search.impl.presentation.SearchViewModel
@@ -57,6 +62,7 @@ import com.jgsilveira.cleanarch.search.impl.presentation.model.FeedbackSectionUI
 import com.jgsilveira.cleanarch.search.impl.presentation.model.ListSectionUIData
 import com.jgsilveira.cleanarch.search.impl.presentation.model.SearchResultUIData
 import com.jgsilveira.cleanarch.search.impl.presentation.model.UIText
+import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -71,25 +77,26 @@ internal class SearchActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MaterialTheme {
-                Scaffold(
-                    modifier = Modifier,
-                    topBar = {
-                        SearchTopBar {
-                            onBackPressedDispatcher.onBackPressed()
+                val lifecycleOwner = LocalLifecycleOwner.current
+                val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+                LaunchedEffect(viewModel.uiEffects) {
+                    lifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        viewModel.uiEffects.collectLatest { uiEffect ->
+                            when (uiEffect) {
+                                SearchUIEffect.NavigateBack -> {
+                                    onBackPressedDispatcher.onBackPressed()
+                                }
+                            }
                         }
                     }
-                ) { innerPadding ->
-                    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-                    SearchScreen(
-                        uiState = uiState,
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxSize(),
-                        onUiEvent = { uiEvent ->
-                            viewModel.dispatchEvent(uiEvent)
-                        }
-                    )
                 }
+                SearchScreen(
+                    uiState = uiState,
+                    modifier = Modifier.fillMaxSize(),
+                    onUiEvent = { uiEvent ->
+                        viewModel.dispatchEvent(uiEvent)
+                    }
+                )
             }
         }
     }
@@ -121,6 +128,30 @@ internal class SearchActivity : ComponentActivity() {
 }
 
 @Composable
+internal fun SearchScreen(
+    uiState: SearchUIState,
+    modifier: Modifier = Modifier,
+    onUiEvent: (SearchUIEvent) -> Unit = {}
+) {
+    Scaffold(
+        modifier = modifier,
+        topBar = {
+            SearchTopBar {
+                onUiEvent(SearchUIEvent.NavBackClick)
+            }
+        }
+    ) { innerPadding ->
+        SearchContent(
+            uiState = uiState,
+            onUiEvent = onUiEvent,
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize()
+        )
+    }
+}
+
+@Composable
 private fun SearchTopBar(onNavClick: () -> Unit = {}) {
     TopAppBar(
         navigationIcon = {
@@ -142,7 +173,7 @@ private fun SearchTopBar(onNavClick: () -> Unit = {}) {
 }
 
 @Composable
-private fun SearchScreen(
+private fun SearchContent(
     uiState: SearchUIState,
     modifier: Modifier = Modifier,
     onUiEvent: (SearchUIEvent) -> Unit = {}
