@@ -4,4 +4,5 @@ internal sealed interface SearchUIEvent {
     data class SearchBarChange(
         val query: String
     ): SearchUIEvent
+    data object NavBackClick: SearchUIEvent
 }
