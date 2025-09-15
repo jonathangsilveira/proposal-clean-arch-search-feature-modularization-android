@@ -17,7 +17,7 @@ internal class SearchParamsFactoryImpl(
         return with(contextConfig) {
             SearchParams(
                 serializationVersion = serializationVersion.name,
-                analyticParams = with(contextConfig.originConfig) {
+                analyticParams = with(originConfig) {
                     AnalyticParams(
                         sessionId = trackerSessionIdProvider.getTrackerSessionId(),
                         id = uuid,
