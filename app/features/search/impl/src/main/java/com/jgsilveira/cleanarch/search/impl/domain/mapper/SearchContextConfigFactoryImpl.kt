@@ -3,7 +3,7 @@ package com.jgsilveira.cleanarch.search.impl.domain.mapper
 import com.jgsilveira.cleanarch.search.android.navigation.SearchOrigin
 import com.jgsilveira.cleanarch.search.impl.domain.exception.SearchContextConfigNotFoundException
 import com.jgsilveira.cleanarch.search.impl.domain.exception.SearchContextNotFoundException
-import com.jgsilveira.cleanarch.search.impl.domain.model.config.DefaultContextConfig
+import com.jgsilveira.cleanarch.search.impl.domain.model.config.ContextConfigModel
 import com.jgsilveira.cleanarch.search.impl.domain.model.config.FeatureAContextConfigBuilder
 import com.jgsilveira.cleanarch.search.impl.domain.model.config.FeatureBContextConfigBuilder
 import com.jgsilveira.cleanarch.search.impl.domain.model.config.SearchContextConfig
@@ -31,7 +31,7 @@ internal object SearchContextConfigFactoryImpl : SearchContextConfigFactory {
             ?: throw SearchContextConfigNotFoundException(context)
         val contextConfig = contextConfigBuilder.build()
         if (contextConfig.isEnabled.not()) {
-            return DefaultContextConfig(contextConfig.originConfig)
+            return ContextConfigModel(contextConfig.originConfig)
         }
         return contextConfig
     }

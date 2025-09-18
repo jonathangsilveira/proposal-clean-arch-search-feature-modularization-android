@@ -5,8 +5,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 internal data class ArgsContextConfig(
-    override val serializationVersion: SerializationVersion,
-    override val group: SearchGroup,
+    override val version: SearchVersion,
+    override val type: String,
     override val queryLimit: Int,
     override val isEnabled: Boolean,
     override val usesDeviceLocation: Boolean,
@@ -25,8 +25,8 @@ internal data class ArgsContextConfig(
         fun fromContextConfig(contextConfig: SearchContextConfig): ArgsContextConfig {
             return with(contextConfig) {
                 ArgsContextConfig(
-                    serializationVersion = serializationVersion,
-                    group = group,
+                    version = version,
+                    type = type,
                     queryLimit = queryLimit,
                     usesDeviceLocation = usesDeviceLocation,
                     isEnabled = isEnabled,

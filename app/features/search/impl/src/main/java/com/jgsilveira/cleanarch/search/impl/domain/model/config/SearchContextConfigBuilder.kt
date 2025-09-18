@@ -6,8 +6,8 @@ internal interface SearchContextConfigBuilder {
 
 internal class FeatureAContextConfigBuilder: SearchContextConfigBuilder {
     override fun build(): SearchContextConfig {
-        return DefaultContextConfig(
-            originConfig = DefaultOriginConfig(
+        return ContextConfigModel(
+            originConfig = OriginConfigModel(
                 name = "FEATURE_A_CONTEXT",
                 screen = "FEATURE_A"
             )
@@ -17,11 +17,11 @@ internal class FeatureAContextConfigBuilder: SearchContextConfigBuilder {
 
 internal class FeatureBContextConfigBuilder: SearchContextConfigBuilder {
     override fun build(): SearchContextConfig {
-        return DefaultContextConfig(
-            serializationVersion = SerializationVersion.V2,
-            group = SearchGroup.PEOPLE,
+        return ContextConfigModel(
+            version = SearchVersion.V2,
+            type = "PEOPLE",
             queryLimit = 3,
-            originConfig = DefaultOriginConfig(
+            originConfig = OriginConfigModel(
                 name = "FEATURE_B_CONTEXT",
                 screen = "FEATURE_B"
             )

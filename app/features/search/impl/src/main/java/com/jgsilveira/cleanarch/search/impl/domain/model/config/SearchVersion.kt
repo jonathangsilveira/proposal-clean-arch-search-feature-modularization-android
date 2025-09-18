@@ -1,5 +1,5 @@
 package com.jgsilveira.cleanarch.search.impl.domain.model.config
 
-enum class SerializationVersion {
+enum class SearchVersion {
     V2, V3
 }

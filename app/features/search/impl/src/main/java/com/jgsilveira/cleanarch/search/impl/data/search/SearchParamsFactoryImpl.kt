@@ -16,7 +16,7 @@ internal class SearchParamsFactoryImpl(
     override fun createSearchParams(query: String): SearchParams {
         return with(contextConfig) {
             SearchParams(
-                serializationVersion = serializationVersion.name,
+                version = version.name,
                 analyticParams = with(originConfig) {
                     AnalyticParams(
                         sessionId = trackerSessionIdProvider.getTrackerSessionId(),
@@ -25,7 +25,7 @@ internal class SearchParamsFactoryImpl(
                         screen = screen
                     )
                 },
-                group = group.name,
+                type = type,
                 queryLimit = queryLimit,
                 query = query,
                 deviceLocation = if (usesDeviceLocation) {

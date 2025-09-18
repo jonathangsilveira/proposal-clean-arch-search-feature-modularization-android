@@ -1,8 +1,8 @@
 package com.jgsilveira.cleanarch.search.impl.domain.model.config
 
 internal interface SearchContextConfig {
-    val serializationVersion: SerializationVersion
-    val group: SearchGroup
+    val version: SearchVersion
+    val type: String
     val queryLimit: Int
     val isEnabled: Boolean
     val usesDeviceLocation: Boolean
